@@ -1,4 +1,4 @@
-import { Configuration, OpenAIApi } from "openai";
+import { Configuration, OpenAIApi, ChatCompletionRequestMessageRoleEnum } from "openai";
 
 const configuration = new Configuration({
   apiKey: process.env.OPENAI_API_KEY,
@@ -30,11 +30,11 @@ export default async function (req, res) {
       model: "gpt-3.5-turbo",
       messages: [
         {
-          role: 'System',
+          role: ChatCompletionRequestMessageRoleEnum.System,
           content: "You are a helpful assistant."
         },
         {
-          role: 'User',
+          role: ChatCompletionRequestMessageRoleEnum.User,
           content: message,
         }
       ],
