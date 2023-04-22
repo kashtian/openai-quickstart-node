@@ -5,10 +5,12 @@ import styles from "./index.module.css";
 export default function Home() {
   const [animalInput, setAnimalInput] = useState("");
   const [result, setResult] = useState();
+  const [loading, setLoading] = useState(false);
 
   async function onSubmit(event) {
     event.preventDefault();
     try {
+      setLoading(true);
       const response = await fetch("/api/generate", {
         method: "POST",
         headers: {
@@ -18,6 +20,7 @@ export default function Home() {
       });
 
       const data = await response.json();
+      setLoading(false);
       if (response.status !== 200) {
         throw data.error || new Error(`Request failed with status ${response.status}`);
       }
@@ -40,17 +43,18 @@ export default function Home() {
 
       <main className={styles.main}>
         <img src="/dog.png" className={styles.icon} />
-        <h3>Name my pet</h3>
+        <h3>Chat with me</h3>
         <form onSubmit={onSubmit}>
           <input
             type="text"
             name="animal"
-            placeholder="Enter an animal"
+            placeholder="Enter an text"
             value={animalInput}
             onChange={(e) => setAnimalInput(e.target.value)}
           />
-          <input type="submit" value="Generate names" />
+          <input type="submit" value="Start chat" />
         </form>
+        <div className={styles.loading}>{loading ? 'loading...' : ''}</div>
         <div className={styles.result}>{result}</div>
       </main>
     </div>

@@ -1,4 +1,4 @@
-import { Configuration, OpenAIApi } from "openai";
+import { Configuration, OpenAIApi, ChatCompletionRequestMessageRoleEnum } from "openai";
 
 const configuration = new Configuration({
   apiKey: process.env.OPENAI_API_KEY,
@@ -15,23 +15,32 @@ export default async function (req, res) {
     return;
   }
 
-  const animal = req.body.animal || '';
-  if (animal.trim().length === 0) {
+  const message = req.body.animal || '';
+  if (message.trim().length === 0) {
     res.status(400).json({
       error: {
-        message: "Please enter a valid animal",
+        message: "Please enter a text",
       }
     });
     return;
   }
 
   try {
-    const completion = await openai.createCompletion({
-      model: "text-davinci-003",
-      prompt: generatePrompt(animal),
+    const completion = await openai.createChatCompletion({
+      model: "gpt-3.5-turbo",
+      messages: [
+        {
+          role: ChatCompletionRequestMessageRoleEnum.System,
+          content: "You are a helpful assistant."
+        },
+        {
+          role: ChatCompletionRequestMessageRoleEnum.User,
+          content: message,
+        }
+      ],
       temperature: 0.6,
     });
-    res.status(200).json({ result: completion.data.choices[0].text });
+    res.status(200).json({ result: completion.data.choices[0].message?.content });
   } catch(error) {
     // Consider adjusting the error handling logic for your use case
     if (error.response) {
