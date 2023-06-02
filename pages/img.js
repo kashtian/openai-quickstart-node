@@ -7,6 +7,10 @@ export default function Home() {
   const [result, setResult] = useState([]);
   const [loading, setLoading] = useState(false);
 
+  const clearText = () => {
+    setImgPrompt('')
+  }
+
   async function onSubmit(event) {
     event.preventDefault();
     try {
@@ -51,7 +55,10 @@ export default function Home() {
             value={imgPrompt}
             onChange={(e) => setImgPrompt(e.target.value)}
           />
-          <input type="submit" value="Start to generate img" />
+          <div className={styles.imgBtnBox}>
+            <input type="submit" value="Start to generate img" />
+            <button onClick={clearText}>clear</button>
+          </div>
         </form>
         <div className={styles.loading}>{loading ? 'loading...' : ''}</div>
 

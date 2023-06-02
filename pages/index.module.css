@@ -68,7 +68,19 @@
   border: 1px solid silver;
   border-radius: 4px;
   font-weight: bold;
+  text-align: center;
 }
 .main .loading {
   margin: 10px;
+}
+
+.imgBtnBox {
+  display: flex;
+}
+.imgBtnBox input {
+  flex: 1;
+}
+.imgBtnBox button {
+  width: 60px;
+  margin-left: 20px;
 }
