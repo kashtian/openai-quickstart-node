@@ -57,7 +57,7 @@ export default function Home() {
           />
           <div className={styles.imgBtnBox}>
             <input type="submit" value="Start to generate img" />
-            <button onClick={clearText}>clear</button>
+            <button type="button" onClick={clearText}>clear</button>
           </div>
         </form>
         <div className={styles.loading}>{loading ? 'loading...' : ''}</div>
